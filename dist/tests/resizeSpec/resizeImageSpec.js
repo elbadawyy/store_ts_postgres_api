@@ -50,4 +50,16 @@ describe("Testing Image Proccessing function", function () {
             }
         });
     }); });
+    it("test image is created with correct name", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var path;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, imagesUtils_1.resizeImageAndExport)("pic.jpeg", process.cwd() + "/src/assets/thumbs/", 44, 44)];
+                case 1:
+                    path = _a.sent();
+                    expect(path.split("/")[path.split("/").length - 1]).toEqual("pic_44_44.jpeg");
+                    return [2 /*return*/];
+            }
+        });
+    }); });
 });
