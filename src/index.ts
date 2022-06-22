@@ -5,7 +5,7 @@ import { resizeImage } from "./controllers/imagesControllers";
 import { validateRequest } from "./middlewares/imagesMiddleware";
 
 dotenv.config();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3030;
 
 // create an instance server
 const app: Application = express();
@@ -14,7 +14,7 @@ const app: Application = express();
 app.use(morgan("dev"));
 
 // add routing for / path
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (req: Request, res: Response): void => {
   res.json({
     message: "Welcome to image proccessing app",
   });
@@ -26,7 +26,7 @@ app.get("/", (req: Request, res: Response) => {
 app.get("/api/images", validateRequest, resizeImage);
 
 // start express server
-app.listen(PORT, () => {
+app.listen(PORT, (): void => {
   console.log(`Server is starting at port:${PORT}`);
 });
 export default app;

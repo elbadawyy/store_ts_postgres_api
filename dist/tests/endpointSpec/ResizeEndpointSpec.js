@@ -39,32 +39,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.resizeImage = void 0;
-var fs_1 = __importDefault(require("fs"));
-var imagesUtils_1 = require("../utils/imagesUtils");
-function resizeImage(req, res) {
-    return __awaiter(this, void 0, void 0, function () {
-        var newImagePath, newImageContent;
+var supertest_1 = __importDefault(require("supertest"));
+var index_1 = __importDefault(require("../../index"));
+var request = (0, supertest_1.default)(index_1.default);
+describe("Testing Image Proccessing endpoint", function () {
+    it("if all parameters are correct expect 200", function () { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    newImagePath = (0, imagesUtils_1.generateImageName)(req.query.image_name, req.query.width, req.query.hieght);
-                    if (!!fs_1.default.existsSync(newImagePath)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, (0, imagesUtils_1.resizeImageAndExport)(req.query.image_name, process.cwd() + "/src/assets/thumbs/", parseInt(req.query.hieght), parseInt(req.query.width))];
+                case 0: return [4 /*yield*/, request.get("/api/images?image_name=pic.jpeg&hieght=55&width=55").expect(200)];
                 case 1:
-                    newImagePath = (_a.sent());
-                    _a.label = 2;
-                case 2:
-                    newImageContent = (0, imagesUtils_1.displayImage)(newImagePath);
-                    if (newImageContent) {
-                        res.setHeader("content-type", "image/jpeg");
-                        res.status(200).send(newImageContent);
-                    }
-                    else
-                        res.status(500).send("Something went wrong");
+                    _a.sent();
                     return [2 /*return*/];
             }
         });
-    });
-}
-exports.resizeImage = resizeImage;
+    }); });
+    it("if image not exist return 404", function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.get("/api/images?image_name=pic22.jpeg&hieght=55&width=55").expect(404)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("if there is a missing parameter return 422", function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, request.get("/api/images?image_name=pic22.jpeg&hieght=55").expect(422)];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});

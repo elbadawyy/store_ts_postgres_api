@@ -69,7 +69,7 @@ function resizeImageAndExport(imageName, ExportPath, newHight, newWidth) {
                 case 3:
                     e_1 = _a.sent();
                     console.log("error catched is =>", e_1);
-                    return [3 /*break*/, 4];
+                    return [2 /*return*/, ""];
                 case 4: return [2 /*return*/];
             }
         });

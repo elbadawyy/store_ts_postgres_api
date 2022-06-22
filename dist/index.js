@@ -32,7 +32,7 @@ var dotenv = __importStar(require("dotenv"));
 var imagesControllers_1 = require("./controllers/imagesControllers");
 var imagesMiddleware_1 = require("./middlewares/imagesMiddleware");
 dotenv.config();
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 3030;
 // create an instance server
 var app = (0, express_1.default)();
 // HTTP request logger middleware

@@ -7,7 +7,7 @@ import {
   generateImageName,
 } from "../utils/imagesUtils";
 
-export async function resizeImage(req: Request, res: Response) {
+export async function resizeImage(req: Request, res: Response): Promise<void> {
   let newImagePath: string = generateImageName(
     req.query.image_name as string,
     req.query.width as string,

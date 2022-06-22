@@ -8,7 +8,7 @@ export async function resizeImageAndExport(
   ExportPath: string,
   newHight: number,
   newWidth: number
-) {
+): Promise<string> {
   const newImagePath: string =
     ExportPath +
     getFileNameOnly(imageName) +
@@ -27,10 +27,11 @@ export async function resizeImageAndExport(
     return newImagePath;
   } catch (e) {
     console.log("error catched is =>", e);
+    return "";
   }
 }
 
-export function displayImage(imagePath: string) {
+export function displayImage(imagePath: string):object {
   const data = fs.readFileSync(imagePath);
   return Buffer.from(data);
 }

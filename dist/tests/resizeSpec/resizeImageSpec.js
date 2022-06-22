@@ -35,36 +35,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.resizeImage = void 0;
-var fs_1 = __importDefault(require("fs"));
-var imagesUtils_1 = require("../utils/imagesUtils");
-function resizeImage(req, res) {
-    return __awaiter(this, void 0, void 0, function () {
-        var newImagePath, newImageContent;
+var imagesUtils_1 = require("../../utils/imagesUtils");
+describe("Testing Image Proccessing function", function () {
+    it("if all parameters are correct expect correct image path", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var path;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    newImagePath = (0, imagesUtils_1.generateImageName)(req.query.image_name, req.query.width, req.query.hieght);
-                    if (!!fs_1.default.existsSync(newImagePath)) return [3 /*break*/, 2];
-                    return [4 /*yield*/, (0, imagesUtils_1.resizeImageAndExport)(req.query.image_name, process.cwd() + "/src/assets/thumbs/", parseInt(req.query.hieght), parseInt(req.query.width))];
+                case 0: return [4 /*yield*/, (0, imagesUtils_1.resizeImageAndExport)("pic.jpeg", process.cwd() + "/src/assets/thumbs/", 55, 55)];
                 case 1:
-                    newImagePath = (_a.sent());
-                    _a.label = 2;
-                case 2:
-                    newImageContent = (0, imagesUtils_1.displayImage)(newImagePath);
-                    if (newImageContent) {
-                        res.setHeader("content-type", "image/jpeg");
-                        res.status(200).send(newImageContent);
-                    }
-                    else
-                        res.status(500).send("Something went wrong");
+                    path = _a.sent();
+                    expect(path).toEqual(process.cwd() + "/src/assets/thumbs/pic_55_55.jpeg");
                     return [2 /*return*/];
             }
         });
-    });
-}
-exports.resizeImage = resizeImage;
+    }); });
+});

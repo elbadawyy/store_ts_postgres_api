@@ -5,7 +5,7 @@ export function validateRequest(
   req: Request,
   res: Response,
   next: NextFunction
-) {
+): void {
   if (
     req.query &&
     req.query.image_name &&
