@@ -1,8 +1,9 @@
 import express, { Application, Request, Response } from "express";
 import morgan from "morgan";
 import * as dotenv from "dotenv";
-import { resizeImage } from "./controllers/imagesControllers";
-import { validateRequest } from "./middlewares/imagesMiddleware";
+import * as productsController  from "./controllers/productsController";
+import * as ordersController  from "./controllers/ordersControllers";
+import * as usersController  from "./controllers/usersController";
 
 dotenv.config();
 const PORT = process.env.PORT || 3030;
@@ -16,14 +17,33 @@ app.use(morgan("dev"));
 // add routing for / path
 app.get("/", (req: Request, res: Response): void => {
   res.json({
-    message: "Welcome to image proccessing app",
+    message: "Welcome to store app api",
   });
 });
 
-// http://localhost:3000/api/images?image_name=pic.jpg&hieght=1&width=55
+//products
+app.get("/products",  productsController.index);
+app.get("/products/:productId",productsController.show);
+app.post("/products",productsController.create);
+app.put("/products/:productId", productsController.update);
+app.delete("/product/:productId", productsController.remove)
 
-// add routing for / path
-app.get("/api/images", validateRequest, resizeImage);
+
+
+//users
+app.get("/users",  usersController.index);
+app.get("/users/:productId",usersController.show);
+app.post("/users",usersController.create);
+app.put("/users/:userId", usersController.update);
+app.delete("/users/:userId", usersController.remove)
+
+//orders
+app.get("/orders",  ordersController.index);
+app.get("/orders/:productId",ordersController.show);
+app.post("/orders",ordersController.create);
+app.put("/orders/:ordersId", ordersController.update);
+app.delete("/orders/:orderId", ordersController.remove)
+
 
 // start express server
 app.listen(PORT, (): void => {
