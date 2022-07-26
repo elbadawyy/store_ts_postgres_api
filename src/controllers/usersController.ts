@@ -14,20 +14,22 @@ export async function index(req: Request, res: Response): Promise<void> {
       
 }
 
-export async function create(req: Request, res: Response): Promise<void> {
+export async function create(userObj:any): Promise<any> {
     try {
+        console.log("user ==>",userObj)
         const connection = await db.connect()
         const sql = `INSERT INTO users (email,password  , firstname , lastname ) values ($1 , $2 , $3 , $4 , $5) returning *`
     
-        const result = await connection.query(sql, [
-          req.body.email,
-          req.body.password,
-          req.body.firstname,
-          req.body.lastname,
-        ])
-        connection.release()
+        // const result = await connection.query(sql, [
+        //     userObj.email,
+        //     userObj.password,
+        //     userObj.firstname,
+        //     userObj.lastname,
+        // ])
+        // connection.release()
     
-        res.status(200).json(result?.rows[0])
+        // // res.status(200).json(result?.rows[0])
+        return 0
 
       } catch (err: any) {
         console.error(err)
@@ -41,7 +43,7 @@ export async function update(req: Request, res: Response): Promise<void> {
         let result = await db.query('UPDATE users SET name = $1, email = $2 WHERE id = $3', [req.body.email, req.body.email, req.body.email])
 
         connection.release()
-        res.status(200).send(`User modified with ID: ${id}`)
+        res.status(200).send(`User modified with ID: ${req.body.email}`)
 
       } catch (err: any) {
         console.error(err)

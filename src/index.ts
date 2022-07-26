@@ -4,12 +4,15 @@ import * as dotenv from "dotenv";
 import * as productsController  from "./controllers/productsController";
 import * as ordersController  from "./controllers/ordersControllers";
 import * as usersController  from "./controllers/usersController";
+import * as usersHandler  from "./handlers/usersHandler";
 
 dotenv.config();
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 3333;
 
 // create an instance server
 const app: Application = express();
+
+app.use(express.json());
 
 // HTTP request logger middleware
 app.use(morgan("dev"));
@@ -33,7 +36,7 @@ app.delete("/product/:productId", productsController.remove)
 //users
 app.get("/users",  usersController.index);
 app.get("/users/:productId",usersController.show);
-app.post("/users",usersController.create);
+app.post("/users", usersHandler.create);
 app.put("/users/:userId", usersController.update);
 app.delete("/users/:userId", usersController.remove)
 

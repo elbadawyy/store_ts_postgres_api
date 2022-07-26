@@ -29,23 +29,41 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var morgan_1 = __importDefault(require("morgan"));
 var dotenv = __importStar(require("dotenv"));
-var imagesControllers_1 = require("./controllers/imagesControllers");
-var imagesMiddleware_1 = require("./middlewares/imagesMiddleware");
+var productsController = __importStar(require("./controllers/productsController"));
+var ordersController = __importStar(require("./controllers/ordersControllers"));
+var usersController = __importStar(require("./controllers/usersController"));
+var usersHandler = __importStar(require("./handlers/usersHandler"));
 dotenv.config();
-var PORT = process.env.PORT || 3030;
+var PORT = process.env.PORT || 3333;
 // create an instance server
 var app = (0, express_1.default)();
+app.use(express_1.default.json());
 // HTTP request logger middleware
 app.use((0, morgan_1.default)("dev"));
 // add routing for / path
 app.get("/", function (req, res) {
     res.json({
-        message: "Welcome to image proccessing app",
+        message: "Welcome to store app api",
     });
 });
-// http://localhost:3000/api/images?image_name=pic.jpg&hieght=1&width=55
-// add routing for / path
-app.get("/api/images", imagesMiddleware_1.validateRequest, imagesControllers_1.resizeImage);
+//products
+app.get("/products", productsController.index);
+app.get("/products/:productId", productsController.show);
+app.post("/products", productsController.create);
+app.put("/products/:productId", productsController.update);
+app.delete("/product/:productId", productsController.remove);
+//users
+app.get("/users", usersController.index);
+app.get("/users/:productId", usersController.show);
+app.post("/users", usersHandler.create);
+app.put("/users/:userId", usersController.update);
+app.delete("/users/:userId", usersController.remove);
+//orders
+app.get("/orders", ordersController.index);
+app.get("/orders/:productId", ordersController.show);
+app.post("/orders", ordersController.create);
+app.put("/orders/:ordersId", ordersController.update);
+app.delete("/orders/:orderId", ordersController.remove);
 // start express server
 app.listen(PORT, function () {
     console.log("Server is starting at port:".concat(PORT));
